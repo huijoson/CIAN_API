@@ -1,0 +1,2456 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Taoyuan_Traffic</name>
+    </assembly>
+    <members>
+        <member name="M:CIAN_API.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.HelpPageConfig">
+            <summary>
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForMediaType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Sets the sample directly for all actions with the specified media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,CIAN_API.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.GetModelDescriptionGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the model description generator.
+            </summary>
+            <param name="config">The configuration.</param>
+            <returns>The <see cref="T:CIAN_API.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator"/></returns>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.ModelDescriptions.ModelDescription">
+            <summary>
+            Describes a type model.
+            </summary>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator">
+            <summary>
+            Generates model descriptions for given types.
+            </summary>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.ModelDescriptions.ModelNameAttribute">
+            <summary>
+            Use this attribute to change the name of the <see cref="T:CIAN_API.Areas.HelpPage.ModelDescriptions.ModelDescription"/> generated for a type.
+            </summary>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.UriParameters">
+            <summary>
+            Gets or sets the <see cref="T:CIAN_API.Areas.HelpPage.ModelDescriptions.ParameterDescription"/> collection that describes the URI parameters for the API.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.RequestDocumentation">
+            <summary>
+            Gets or sets the documentation for the request.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.RequestModelDescription">
+            <summary>
+            Gets or sets the <see cref="T:CIAN_API.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the request body.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.RequestBodyParameters">
+            <summary>
+            Gets the request body parameter descriptions.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.ResourceDescription">
+            <summary>
+            Gets or sets the <see cref="T:CIAN_API.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the resource.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.ResourceProperties">
+            <summary>
+            Gets the resource property descriptions.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories">
+            <summary>
+            Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,
+            stopping when the factory successfully returns a non-<see langref="null"/> object.
+            </summary>
+            <remarks>
+            Collection includes just <see cref="M:CIAN_API.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)"/> initially. Use
+            <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
+            <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,CIAN_API.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,CIAN_API.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create
+            one using <see cref="M:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.DefaultSampleObjectFactory(CIAN_API.Areas.HelpPage.HelpPageSampleGenerator,System.Type)"/> (which wraps an <see cref="T:CIAN_API.Areas.HelpPage.ObjectGenerator"/>) and other
+            factories in <see cref="P:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.ResolveHttpRequestMessageType(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Resolves the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The type.</returns>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},CIAN_API.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Creates a new <see cref="T:CIAN_API.Areas.HelpPage.HelpPageSampleKey"/> based on media type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:CIAN_API.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleKey.#ctor(CIAN_API.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:CIAN_API.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:CIAN_API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:CIAN_API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,CIAN_API.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:CIAN_API.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:CIAN_API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:CIAN_API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:CIAN_API.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CIAN_API.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:CIAN_API.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CIAN_API.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Alert.AlertController.GetAlertInfo(System.String)">
+            <summary>
+            取得災害警示資訊(全台)
+            </summary>
+            <param name="keyWord">鄉鎮區(如:桃園)</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Alert.AlertCustController.GetAlertInfo(System.String)">
+            <summary>
+            取得災害警示資訊
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:CIAN_API.Controllers.V1.Bus.BusController">
+            <summary>
+            Bus
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Bus.BusController.GetRoute(System.String,System.String)">
+            <summary>
+            取得所有公車路線(全台)
+            </summary>
+            <param name="city">鄉政英文名稱 Taipei: 1, NewTaipei: 2, Taoyuan: 3, Taichung: 4, Tainan: 5, 
+                    Kaohsiung: 6, Keelung: 7, Hsinchu: 8, HsinchuCounty: 9, MiaoliCounty: 10, 
+                    ChanghuaCounty: 11, NantouCounty: 12, YunlinCounty: 13, ChiayiCounty: 14, Chiayi: 15,
+                    PingtungCounty: 16, YilanCounty: 17, HualienCounty: 18, TaitungCounty: 19, KinmenCounty: 20,
+                    PenghuCounty: 21, PenghuCounty: 22</param>
+            <param name="keyword">關鍵字</param>
+            <returns></returns> 
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Bus.BusController.GetBusEstimatedTime(System.String,System.String,System.Int32)">
+            <summary>
+            取得公車到站資料(全台)
+            </summary>
+            <param name="city">鄉鎮英文</param>
+            <param name="routeName">公車路線名稱</param>
+            <param name="direction">去、返(0、1)</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Bus.BusController.GetBusDynamic(System.String,System.String)">
+            <summary>
+            取得路線公車動態資訊(全台)
+            </summary>
+            <param name="cityEN">鄉政英文名稱 Taipei: 1, NewTaipei: 2, Taoyuan: 3, Taichung: 4, Tainan: 5, 
+                    Kaohsiung: 6, Keelung: 7, Hsinchu: 8, HsinchuCounty: 9, MiaoliCounty: 10, 
+                    ChanghuaCounty: 11, NantouCounty: 12, YunlinCounty: 13, ChiayiCounty: 14, Chiayi: 15,
+                    PingtungCounty: 16, YilanCounty: 17, HualienCounty: 18, TaitungCounty: 19, KinmenCounty: 20,
+                    PenghuCounty: 21, PenghuCounty: 22</param>
+            <param name="routeName">路線代號</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Bus.BusController.GetBusStop(System.String,System.String)">
+            <summary>
+            取得公車站牌資訊(全台)
+            </summary>
+            <param name="cityEN">鄉政英文名稱 Taipei: 1, NewTaipei: 2, Taoyuan: 3, Taichung: 4, Tainan: 5, 
+                    Kaohsiung: 6, Keelung: 7, Hsinchu: 8, HsinchuCounty: 9, MiaoliCounty: 10, 
+                    ChanghuaCounty: 11, NantouCounty: 12, YunlinCounty: 13, ChiayiCounty: 14, Chiayi: 15,
+                    PingtungCounty: 16, YilanCounty: 17, HualienCounty: 18, TaitungCounty: 19, KinmenCounty: 20,
+                    PenghuCounty: 21, PenghuCounty: 22</param>
+            <param name="routeName">路線代號</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Bus.BusDynamicController.Index">
+            <summary>
+            動態公車項目
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Bus.BusDynamicController.GetDynamicBusInfo(System.String,System.String)">
+            <summary>
+            取得路線公車動態資訊
+            </summary>
+            <param name="routeName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CIAN_API.Controllers.V1.Bus.BusRouteController">
+            <summary>
+            公車路線資訊
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Bus.BusRouteController.GetRoute(System.String,System.String)">
+            <summary>
+            取得公車路線
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Bus.BusRouteController.GetBusEstimatedTime(System.String,System.String,System.Int32)">
+            <summary>
+            取得公車路線資訊並轉成JSON輸出
+            </summary>
+            <param name="city">鄉鎮英文</param>
+            <param name="routeName">公車路線名稱</param>
+            <param name="direction">去、返(0、1)</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Bus.BusRouteController.JsonSearchRoute(System.String)">
+            <summary>
+            關鍵字搜尋公車路線
+            </summary>
+            <param name="keyword">關鍵字(路線名稱、路線代號)</param>
+            <returns></returns>
+        </member>
+        <member name="T:CIAN_API.Controllers.V1.Bus.BusStopController">
+            <summary>
+            站牌資訊
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Bus.BusStopController.GetBusStopInfo(System.String,System.String)">
+            <summary>
+            取得公車站牌資訊
+            </summary>
+            <param name="routeName">路線名稱</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.FreeWay.FreeWayController.GetFreeWay">
+            <summary>
+            取得道路救援資訊
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Park.ParkingController.GetParking">
+            <summary>
+            取得停車場資訊
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Product.ProductController.GetRoute(System.Int32,System.String)">
+             <summary>
+             取得所有公車路線(含關鍵字)
+             </summary>
+             <param name="cityType">Taipei: 1, NewTaipei: 2, Taoyuan: 3, Taichung: 4, Tainan: 5, 
+            Kaohsiung: 6, Keelung: 7, Hsinchu: 8, HsinchuCounty: 9, MiaoliCounty: 10, 
+            ChanghuaCounty: 11, NantouCounty: 12, YunlinCounty: 13, ChiayiCounty: 14, Chiayi: 15, 
+            PingtungCounty: 16, YilanCounty: 17, HualienCounty: 18, TaitungCounty: 19, KinmenCounty: 20, 
+            PenghuCounty: 21, PenghuCounty: 22</param>
+            <param name="keyWord">關鍵字搜尋</param>
+             <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Product.ProductController.GetBusEstimated(System.String,System.String,System.Int32)">
+            <summary>
+            取得公車路線資料
+            </summary>
+            <param name="routeName">路線代號(如:137)</param>
+            <param name="direction">去返</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Product.ProductController.GetDynamicBus(System.String,System.String)">
+            <summary>
+            取得路線公車動態資訊
+            </summary>
+            <param name="routeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Product.ProductController.GetBusStop(System.String,System.String)">
+            <summary>
+            取得公車站牌資訊
+            </summary>
+            <param name="routeName">路線代號</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Product.ProductController.GetAlertInfo(System.String)">
+            <summary>
+            取得災害警示資訊(全台)
+            </summary>
+            <param name="keyWord">鄉鎮區(如:桃園)</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Product.ProductController.GetRealTime(System.Single,System.Single,System.Int32)">
+            <summary>
+            取得即時路況(全台)
+            </summary>
+            <param name="radius">半徑範圍(公尺)</param>
+            <param name="x">經度</param>
+            <param name="y">緯度</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Product.ProductController.GetTraDTT(System.String,System.String,System.String,System.String)">
+            <summary>
+            取得公車路線資料
+            </summary>
+            <param name="originSation">去站(中文，如臺北)</param>
+            <param name="destionation">回站(中文，如臺南)</param>
+            <param name="trainDate">乘車日期(2017-05-25)</param>
+            <param name="trainAfterTime">希望乘車時間(17:30)</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.RealTime.RealTimeController.GetSearchWeather(System.Single,System.Single,System.Int32)">
+            <summary>
+            取得即時路況(全台)
+            </summary>
+            <param name="radius">半徑範圍(公尺)</param>
+            <param name="x">經度</param>
+            <param name="y">緯度</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Rest.RestController.GetRest">
+            <summary>
+            取得兩輪充電站資訊
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Texi.TexiController.GetTexiInfo">
+            <summary>
+            取得計程車資訊
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Tidal.TidalController.GetSearchTidal(System.String)">
+            <summary>
+            取得一個月份潮汐資料(金門地區)
+            </summary>
+            <param name="local">鄉鎮地區關鍵字
+            "金門縣金城鎮", "金門縣金沙鎮", "金門縣金湖鎮", "金門縣金寧鄉", "金門縣烈嶼鄉", "金門縣烏坵鄉"</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Tidal.TidalCusController.GetTidalInfo(System.String)">
+            <summary>
+            取得搜尋潮汐資訊(金門)
+            </summary>
+            <param name="local">鄉鎮地區關鍵字
+            "金門縣金城鎮", "金門縣金沙鎮", "金門縣金湖鎮", "金門縣金寧鄉", "金門縣烈嶼鄉", "金門縣烏坵鄉"</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.TRA.TraController.GetTraDailyTimeTable(System.String,System.String,System.String,System.String)">
+            <summary>
+            取得公車路線資料
+            </summary>
+            <param name="originSation">去站(中文，如臺北)</param>
+            <param name="destionation">回站(中文，如臺南)</param>
+            <param name="trainDate">乘車日期(2017-05-25)</param>
+            <param name="trainAfterTime">希望乘車時間(17:30)</param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.UBike.UBikeController.GetUBikeInfo">
+            <summary>
+            取得YouBike資訊
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Weather.TaoyuanWeatherController.GetSearchWeather(System.String,System.DateTime,System.String)">
+            <summary>
+            取得搜尋天氣資訊
+            </summary>
+            <param name="attr"></param>
+            <param name="date"></param>
+            <param name="local"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CIAN_API.Controllers.V1.Weather.WeatherController.GetSearchWeather(System.String,System.String)">
+            <summary>
+            取得一週天氣預報資訊
+            </summary>
+            <param name="attr">天氣屬性(           
+            Wx:天氣示意, 
+            PoP:降雨率, 
+            T:溫度, 
+            WeatherDescription:天氣敘述,
+            Wind:風速、風向 )</param>
+            <param name="date">日期(如:2017-05-26 21:00:00)</param>
+            <param name="local">區域(如:桃園區)</param>
+            <returns></returns>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.IAlert.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.IBusRoute.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Interface.IBusRoute.clearBusRouteTable">
+            <summary>
+            新增公車資訊
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.IFreeWay.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.IParking.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.IProduct.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.IRealTime.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.IRest.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.ITexi.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.ITidal.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Interface.ITidal.addTidalInfo(System.Collections.Generic.IEnumerable{CIAN_API.ViewModels.Tidal.TidalDeserialize},System.Int32,System.String)">
+            <summary>
+            新增潮汐資訊
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Interface.ITidal.clearTidalTable">
+            <summary>
+            清潮汐資料
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Interface.ITidal.getTidalInfo(System.String)">
+            <summary>
+            取得潮汐資料
+            </summary>
+            <param name="keyWord">地區關鍵字</param>
+            <returns></returns>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.ITraLine.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.IUBike.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.IWeather.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Interface.IWeather.addWeatherInfo(System.Collections.Generic.IEnumerable{CIAN_API.ViewModels.Weather.Weather3DayDeserialize},System.Int32)">
+            <summary>
+            新增天氣資訊
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Interface.IWeather.GetWeatherSearch(System.String,System.String)">
+            <summary>
+            取得搜尋的天氣資訊
+            </summary>
+            <param name="attr">天氣屬性</param>
+            <param name="date">日期時間</param>
+            <returns></returns>
+        </member>
+        <member name="P:CIAN_API.Models.Interface.IBusDynamic.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Interface.IBusDynamic.AddBusInfo(System.Collections.Generic.IEnumerable{CIAN_API.ViewModels.BusDynamicDeserialize})">
+            <summary>
+            新增公車資訊
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.AlertRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.AlertRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.AlertRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.AlertRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.AlertRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.AlertRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.AlertRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.BusRouteRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.BusRouteRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusRouteRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusRouteRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusRouteRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.BusRouteRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusRouteRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusRouteRepository.AddBusRoute(System.Collections.Generic.IEnumerable{CIAN_API.ViewModels.BusRouteDeserialize},System.Int32,System.Int32)">
+            <summary>
+            新增公車路線資訊
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusRouteRepository.AddBusEstimate(System.Collections.Generic.IEnumerable{CIAN_API.ViewModels.BusEstimatedTimeDeserialize})">
+            <summary>
+            取得公車到站資訊
+            </summary>
+            <param name="AddBusEstimateSource"></param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusRouteRepository.GetRoute(System.Int32,System.String)">
+            <summary>
+            取得所有路線
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.BusStopRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.BusStopRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusStopRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusStopRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusStopRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.BusStopRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusStopRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.FreeWayRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.FreeWayRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.FreeWayRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.FreeWayRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.FreeWayRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.FreeWayRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.FreeWayRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.ProductRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.ProductRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.ProductRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.ProductRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.ProductRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.ProductRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.ProductRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.RestRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.RestRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.RestRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.RestRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.RestRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.RestRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.RestRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.ParkingRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.ParkingRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.ParkingRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.ParkingRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.ParkingRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.ParkingRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.ParkingRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.ParkingRepository.AddOutParking(System.Collections.Generic.IEnumerable{CIAN_API.ViewModels.Parking.ParkingDeserialize})">
+            <summary>
+            新增熱門關鍵字
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.RealTimeRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.RealTimeRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.RealTimeRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.RealTimeRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.RealTimeRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.RealTimeRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.RealTimeRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.TexiRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.TexiRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TexiRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TexiRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TexiRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.TexiRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TexiRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.TidalRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.TidalRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TidalRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TidalRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TidalRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.TidalRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TidalRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.TraRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.TraRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TraRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TraRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TraRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.TraRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TraRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TraRepository.AddTraLine(System.Collections.Generic.IEnumerable{CIAN_API.ViewModels.TRA.TraLineDeserialize})">
+            <summary>
+            新增路線資料至資料庫
+            </summary>
+            <param name="traLineResource"></param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.TraRepository.AddStation(System.Collections.Generic.IEnumerable{CIAN_API.ViewModels.TRA.TraStationDeserialize})">
+            <summary>
+            新增車站資料至資料庫
+            </summary>
+            <param name="traStationResource"></param>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.UBikeRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.UBikeRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.UBikeRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.UBikeRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.UBikeRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.UBikeRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.UBikeRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.WeatherRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.WeatherRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.WeatherRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.WeatherRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.WeatherRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.WeatherRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.WeatherRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.BusDynamicRepository._db">
+            <summary>
+            (私有) 資料庫實體資料集合
+            </summary>
+        </member>
+        <member name="F:CIAN_API.Models.Repository.BusDynamicRepository._now">
+            <summary>
+            目前時間
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusDynamicRepository.#ctor">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusDynamicRepository.#ctor(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            倉儲建構子
+            </summary>
+            <param name="context">實體資料集合</param>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusDynamicRepository.Finalize">
+            <summary>
+            倉儲建構子
+            </summary>
+        </member>
+        <member name="P:CIAN_API.Models.Repository.BusDynamicRepository.Entity">
+            <summary>
+            傳回使用的資料庫實體
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusDynamicRepository.Dispose">
+            <summary>
+            資源釋放
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.Repository.BusDynamicRepository.AddBusInfo(System.Collections.Generic.IEnumerable{CIAN_API.ViewModels.BusDynamicDeserialize})">
+            <summary>
+            新增熱門關鍵字
+            </summary>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.BusDynamicRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.BusRouteRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.BusStopRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.TraRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.ParkingRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.WeatherRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.AlertRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.RealTimeRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.UBikeRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.RestRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.FreeWayRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.TexiRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="M:CIAN_API.Models.DataFactory.TidalRepository(CIAN_API.Models.DataClassesDataContext)">
+            <summary>
+            通用資料倉儲
+            </summary>
+            <param name="dataContext">資料實體</param>
+            <returns>資料倉儲介面</returns>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Alert.AlertDeserialize.id">
+            <summary>
+            災害消息編號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Alert.AlertDeserialize.title">
+            <summary>
+            災害標題
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Alert.AlertDeserialize.updated">
+            <summary>
+            發布時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Alert.AlertDeserialize.author">
+            <summary>
+            發布單位
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Alert.AlertInfo.messageID">
+            <summary>
+            訊息編號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Alert.AlertInfo.updated">
+            <summary>
+            更新時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Alert.AlertInfo.name">
+            <summary>
+            發布單位
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Alert.AlertInfo.text">
+            <summary>
+            災害敘述
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Alert.AlertInfo.term">
+            <summary>
+            災害類型
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.RouteID">
+            <summary>
+            路線ID
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.PlateNumb">
+            <summary>
+            車牌號碼
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.OperatorID">
+            <summary>
+            營運業者代碼
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.RouteUID">
+            <summary>
+            路線唯一識別代碼，規則為 {業管機關代碼} + {RouteID}，其中 {業管機關代碼}
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.RouteName">
+            <summary>
+            路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.SubRouteUID">
+            <summary>
+            子路線唯一識別代碼，規則為 {業管機關代碼} + {SubRouteID}，其中 {業管機關代碼}
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.SubRouteID">
+            <summary>
+            地區既用中之子路線代碼(為原資料內碼) 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.SubRouteName">
+            <summary>
+            子路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.Direction">
+            <summary>
+            去返程 = ['0: 去程', '1: 返程']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.PositionLat">
+            <summary>
+            車輛位置經度
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.Speed">
+            <summary>
+            行駛速度(kph) 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.Azimuth">
+            <summary>
+            方位角
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.DutyStatus">
+            <summary>
+            勤務狀態 = ['0: 正常', '1: 開始', '2: 結束']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.BusStatus">
+            <summary>
+            行車狀況 = ['0: 正常', '1: 車禍', '2: 故障', '3: 塞車', '4: 緊急求援', '5: 加油', '90: 不明', '91: 去回不明', '98: 偏移路線', '99: 非營運狀態', '100: 客滿', '101: 包車出租', '255: 未知']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.MessageType">
+            <summary>
+            資料型態種類 = ['0: 未知', '1: 定期', '2: 非定期']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.GPSTime">
+            <summary>
+            車機時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.SrcUpdateTime">
+            <summary>
+            來源端平台接收時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamic.UpdateTime">
+            <summary>
+            本平台資料更新時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.PlateNumb">
+            <summary>
+            車牌號碼
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.OperatorID">
+            <summary>
+            營運業者代碼
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.RouteUID">
+            <summary>
+            路線唯一識別代碼，規則為 {業管機關代碼} + {RouteID}，其中 {業管機關代碼}
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.RouteID">
+            <summary>
+            路線ID
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.RouteName">
+            <summary>
+            路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.SubRouteUID">
+            <summary>
+            子路線唯一識別代碼，規則為 {業管機關代碼} + {SubRouteID}，其中 {業管機關代碼}
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.SubRouteID">
+            <summary>
+            地區既用中之子路線代碼(為原資料內碼) 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.SubRouteName">
+            <summary>
+            子路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.Direction">
+            <summary>
+            去返程 = ['0: 去程', '1: 返程']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.BusPosition">
+            <summary>
+            車輛位置經度
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.Speed">
+            <summary>
+            行駛速度(kph) 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.Azimuth">
+            <summary>
+            方位角
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.DutyStatus">
+            <summary>
+            勤務狀態 = ['0: 正常', '1: 開始', '2: 結束']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.BusStatus">
+            <summary>
+            行車狀況 = ['0: 正常', '1: 車禍', '2: 故障', '3: 塞車', '4: 緊急求援', '5: 加油', '90: 不明', '91: 去回不明', '98: 偏移路線', '99: 非營運狀態', '100: 客滿', '101: 包車出租', '255: 未知']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.MessageType">
+            <summary>
+            資料型態種類 = ['0: 未知', '1: 定期', '2: 非定期']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.GPSTime">
+            <summary>
+            車機時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.SrcUpdateTime">
+            <summary>
+            來源端平台接收時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusDynamicDeserialize.UpdateTime">
+            <summary>
+            本平台資料更新時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.PlateNumb">
+            <summary>
+            車牌號碼 [値為値為-1時，表示目前該站位無車輛行駛]
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.StopUID">
+            <summary>
+            站牌唯一識別代碼，規則為 {業管機關代碼} + {StopID}，其中 {業管機關代碼} 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.StopID">
+            <summary>
+            地區既用中之站牌代碼(為原資料內碼)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.StopName">
+            <summary>
+            站牌名
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.RouteUID">
+            <summary>
+            路線唯一識別代碼，規則為 {業管機關代碼} + {RouteID}，其中 {業管機關代碼} 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.RouteID">
+            <summary>
+            地區既用中之路線代碼(為原資料內碼)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.RouteName">
+            <summary>
+            路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.SubRouteUID">
+            <summary>
+            子路線唯一識別代碼，規則為 {業管機關代碼} + {SubRouteID}，其中 {業管機關代碼}
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.SubRouteID">
+            <summary>
+            地區既用中之子路線代碼(為原資料內碼) 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.SubRouteName">
+            <summary>
+            子路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.Direction">
+            <summary>
+            去返程 = ['0: 去程', '1: 返程']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.EstimateTime">
+            <summary>
+            到站時間預估(秒) [當StopStatus値為1~4或PlateNumb値為-1時，EstimateTime値為空値; 反之，EstimateTime有値]
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.MessageType">
+            <summary>
+            資料型態種類 = ['0: 未知', '1: 定期', '2: 非定期']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.NextBusTime">
+            <summary>
+            下一班公車到達時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.SrcUpdateTime">
+            <summary>
+            來源端平台資料更新時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTime.UpdateTime">
+            <summary>
+            本平台資料更新時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.PlateNumb">
+            <summary>
+            車牌號碼 [値為値為-1時，表示目前該站位無車輛行駛]
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.StopUID">
+            <summary>
+            站牌唯一識別代碼，規則為 {業管機關代碼} + {StopID}，其中 {業管機關代碼} 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.StopID">
+            <summary>
+            地區既用中之站牌代碼(為原資料內碼)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.StopName">
+            <summary>
+            站牌名
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.RouteUID">
+            <summary>
+            路線唯一識別代碼，規則為 {業管機關代碼} + {RouteID}，其中 {業管機關代碼} 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.RouteID">
+            <summary>
+            地區既用中之路線代碼(為原資料內碼)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.RouteName">
+            <summary>
+            路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.SubRouteUID">
+            <summary>
+            子路線唯一識別代碼，規則為 {業管機關代碼} + {SubRouteID}，其中 {業管機關代碼}
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.SubRouteID">
+            <summary>
+            地區既用中之子路線代碼(為原資料內碼) 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.SubRouteName">
+            <summary>
+            子路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.Direction">
+            <summary>
+            去返程 = ['0: 去程', '1: 返程']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.EstimateTime">
+            <summary>
+            到站時間預估(秒) [當StopStatus値為1~4或PlateNumb値為-1時，EstimateTime値為空値; 反之，EstimateTime有値]
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.MessageType">
+            <summary>
+            資料型態種類 = ['0: 未知', '1: 定期', '2: 非定期']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.NextBusTime">
+            <summary>
+            下一班公車到達時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.SrcUpdateTime">
+            <summary>
+            來源端平台資料更新時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusEstimatedTimeDeserialize.UpdateTime">
+            <summary>
+            本平台資料更新時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusStopCustom.RouteName">
+            <summary>
+            路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusStopCustom.Direction">
+            <summary>
+            去返程 = ['0: 去程', '1: 返程']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusStopCustom.Stops">
+            <summary>
+            所有經過站牌 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusStopCustom.UpdateDate">
+            <summary>
+            資料更新日期
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.BusStopCustom.UpdateTime">
+            <summary>
+            資料更新日期時間
+            </summary>
+        </member>
+        <member name="T:CIAN_API.ViewModels.GetRoute">
+            <summary>
+            取得所有公車路線
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.GetRoute.RouteUID">
+            <summary>
+            路線唯一識別代碼，規則為 {業管機關代碼} + {RouteID}
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.GetRoute.RouteID">
+            <summary>
+            地區既用中之路線代碼(為原資料內碼) 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.GetRoute.RouteName">
+            <summary>
+            路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.GetRoute.Direction">
+            <summary>
+            去返程 = ['0: 去程', '1: 返程']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.GetRoute.DepartureStopNameZh">
+            <summary>
+            起站中文名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.GetRoute.DestinationStopNameZh">
+            <summary>
+            終點站中文名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.GetRoute.Headsign">
+            <summary>
+            車頭描述
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Routename.Zh_tw">
+            <summary>
+            路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Subroutename.Zh_tw">
+            <summary>
+            路線名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Busposition.PositionLat">
+            <summary>
+            位置緯度(WGS84) 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Busposition.PositionLon">
+            <summary>
+            位置經度(WGS84)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Stop.StopUID">
+            <summary>
+            站牌唯一識別代碼，規則為 {業管機關代碼} + {StopID}，其中 {業管機關代碼}
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Stop.StopID">
+            <summary>
+            地區既用中之站牌代碼(為原資料內碼)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Stop.StopName">
+            <summary>
+            站牌名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Stop.StopBoarding">
+            <summary>
+            上下車站別 = ['0: 可上下車', '1: 可上車', '-1: 可下車']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Stop.StopSequence">
+            <summary>
+            路線經過站牌之順序
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Stop.StopPosition">
+            <summary>
+            站牌位置
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Stopname.Zh_tw">
+            <summary>
+            站牌名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Stopposition.PositionLat">
+            <summary>
+            位置緯度(WGS84) 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Stopposition.PositionLon">
+            <summary>
+            位置經度(WGS84)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.FreeWay.FreeWayDeserialize.rID">
+            <summary>
+            公司編號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.FreeWay.FreeWayDeserialize.name">
+            <summary>
+            公司名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.FreeWay.FreeWayDeserialize.addr">
+            <summary>
+            公司地址
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.FreeWay.FreeWayDeserialize.phoneNum">
+            <summary>
+            公司電話
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.FreeWay.FreeWayDeserialize.freephoneNum">
+            <summary>
+            免付費電話
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.FreeWay.FreeWayDeserialize.smallCar">
+            <summary>
+            小型車輛救援(有:Y、無:N)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.FreeWay.FreeWayDeserialize.largeCar">
+            <summary>
+            大型車輛救援(有:Y、無:N)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.parkName">
+            <summary>
+            停車場名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.areaId">
+            <summary>
+            地區編碼
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.wgsY">
+            <summary>
+            緯度
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.wgsX">
+            <summary>
+            經度
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.totalSpace">
+            <summary>
+            總車位數
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.introduction">
+            <summary>
+            停車場介紹
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.parkId">
+            <summary>
+            停車場編號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.address">
+            <summary>
+            停車場地址
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.payGuide">
+            <summary>
+            停車場說明
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize._id">
+            <summary>
+            停車場代號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.surplusSpace">
+            <summary>
+            剩餘車位數
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Parking.ParkingDeserialize.areaName">
+            <summary>
+            地區名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.region">
+            <summary>
+            東南西北部
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.srcdetail">
+            <summary>
+            來源單位
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.areaNm">
+            <summary>
+            區域
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.UID">
+            <summary>
+            訊息編號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.direction">
+            <summary>
+            雙向或單向
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.y1">
+            <summary>
+            緯度
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.happentime">
+            <summary>
+            發生時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.roadtype">
+            <summary>
+            路況狀況
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.road">
+            <summary>
+            哪一條路
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.modDttm">
+            <summary>
+            發布時間
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.comment">
+            <summary>
+            路況敘述
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.happendate">
+            <summary>
+            發生日期
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.RealTime.RealTimeInfoDeserialize.x1">
+            <summary>
+            經度
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Text.TexiDeserialize.tID">
+            <summary>
+            編號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Text.TexiDeserialize.Name">
+            <summary>
+            計程車公司
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Text.TexiDeserialize.Lat">
+            <summary>
+            緯度
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Text.TexiDeserialize.Lon">
+            <summary>
+            經度
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Text.TexiDeserialize.Addr">
+            <summary>
+            公司地址
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Text.TexiDeserialize.PhoneNum">
+            <summary>
+            電話
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Text.TexiDeserialize.Area">
+            <summary>
+            所在範圍
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Tidal.TidalCusDeserialize.locationName">
+            <summary>
+            地區
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Tidal.TidalCusDeserialize.chineseDate">
+            <summary>
+            農曆日期
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Tidal.TidalCusDeserialize.tidalDiff">
+            <summary>
+            潮差
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Tidal.TidalCusDeserialize.dataTime">
+            <summary>
+            日期
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Tidal.TidalCusDeserialize.tidalStatus">
+            <summary>
+            潮汐
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Tidal.TidalCusDeserialize.tidalTWVD">
+            <summary>
+            潮高(TWWD)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Tidal.TidalCusDeserialize.tidalLocal">
+            <summary>
+            潮高(當地)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Tidal.TidalCusDeserialize.tidalRelationSea">
+            <summary>
+            潮高(相對海圖)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.TrainNo">
+            <summary>
+            車次代碼
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.Direction">
+            <summary>
+            順逆行 = ['0: 順行', '1: 逆行']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.StartingStationID">
+            <summary>
+            列車起點車站代號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.StartingStationName">
+            <summary>
+            列車起點車站名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.EndingStationID">
+            <summary>
+            列車終點車站代號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.EndingStationName">
+            <summary>
+            列車終點車站名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.TrainClassificationID">
+            <summary>
+            列車車種代碼
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.TripLine">
+            <summary>
+            山海線類型 = ['0: 不經山海線', '1: 山線', '2: 海線']
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.WheelchairFlag">
+            <summary>
+            是否提供輪椅服務
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.PackageServiceFlag">
+            <summary>
+            是否提供行李服務
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.DiningFlag">
+            <summary>
+            是否提供餐車服務 
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.BikeFlag">
+            <summary>
+            是否可攜帶自行車
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.BreastFeedingFlag">
+            <summary>
+            是否設有哺乳室
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.DailyFlag">
+            <summary>
+            是否每日行駛
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.ServiceAddedFlag">
+            <summary>
+            是否為加班車
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.Note">
+            <summary>
+            附註說明
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.Dailytraininfo.UpdateDate">
+            <summary>
+            資料更新日期
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraDailyTimeTableDeserialize.TrainDate">
+            <summary>
+            行駛日期
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraDailyTimeTableDeserialize.DailyTrainInfo">
+            <summary>
+            車次資料
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraDailyTimeTableDeserialize.OriginStopTime">
+            <summary>
+            起站停靠時間資料
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraDailyTimeTableDeserialize.DestinationStopTime">
+            <summary>
+            迄站停靠時間資料
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraDailyTimeTableDeserialize.UpdateDate">
+            <summary>
+            資料更新日期
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraLineDeserialize.LineNo">
+            <summary>
+            路線編號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraLineDeserialize.LineID">
+            <summary>
+            路線代碼
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraLineDeserialize.LineNameZh">
+            <summary>
+            路線中文名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraLineDeserialize.LineNameEn">
+            <summary>
+            路線英文名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraLineDeserialize.LineSectionNameZh">
+            <summary>
+            路線區間中文名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraLineDeserialize.LineSectionNameEn">
+            <summary>
+            路線區間英文名稱
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.TRA.TraLineDeserialize.IsBranch">
+            <summary>
+            是否位於支線
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize._id">
+            <summary>
+            編號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.sarea">
+            <summary>
+            場站區域
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.sareaen">
+            <summary>
+            場站區域(英文)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.sna">
+            <summary>
+            場站名稱(中文)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.aren">
+            <summary>
+            場站區域(中文)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.sno">
+            <summary>
+            站點代號
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.tot">
+            <summary>
+            場站總停車格
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.snaen">
+            <summary>
+            場站名稱(英文)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.bemp">
+            <summary>
+            空站數量(可還車位數)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.ar">
+            <summary>
+            地址(中文)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.act">
+            <summary>
+            全站禁用狀態(場站暫停營運)
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.lat">
+            <summary>
+            緯度
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.lng">
+            <summary>
+            經度
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.sbi">
+            <summary>
+            場站目前車輛數量
+            </summary>
+        </member>
+        <member name="P:CIAN_API.ViewModels.Ubike.UBikeDeserialize.mday">
+            <summary>
+            時間
+            </summary>
+        </member>
+    </members>
+</doc>
