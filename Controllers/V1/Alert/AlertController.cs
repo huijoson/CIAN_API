@@ -6,9 +6,11 @@ using System.Web.Http;
 using CIAN_API.Models;
 using CIAN_API.Models.Interface;
 using CIAN_API.ViewModels.Alert;
+using Taoyuan_Traffic.ViewModels.Token;
 
 namespace CIAN_API.Controllers.V1.Alert
 {
+    [JwtAuthActionFilter]
     public class AlertController : ApiController
     {
         /// <summary>

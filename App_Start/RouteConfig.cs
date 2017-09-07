@@ -74,6 +74,12 @@ namespace CIAN_API
             );
 
             routes.MapRoute(
+                name: "TokenApiV1",
+                url: "api/v1/Token/{controller}/{action}",
+                namespaces: new string[] { "TokenController" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
